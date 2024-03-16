@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFT Swap DApp</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.5/dist/web3.min.js"></script>
+    <script type="text/javascript">
+        // Set up Web3
+        if (window.ethereum) {
+            window.web3 = new Web3(window.ethereum);
+            window.ethereum.enable();
+        } else if (window.web3) {
+            window.web3 = new Web3(window.web3.currentProvider);
+        } else {
+            alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
+        }
+
+        // Contract ABI
+        const contractABI = [
+            // Define contract functions here
+            // e.g., { "constant": true, "inputs": [], "name": "myFunction", "outputs": [{"name": "","type": "uint256"}], "payable": false, "stateMutability": "view", "type": "function" }
+        ];
+
+        // Contract address
+        const contractAddress = '0xb56504262b19578400C90B9B980Bcd2aCC7FE3cD';
+
+        // Instantiate contract
+        const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+        // Function to swap NFT and receive ERC20 tokens
+        async function swapNFT(tokenId) {
+            try {
+                // Call the smart contract method
+                await contract.methods.swapNFT(tokenId).send({from: ethereum.selectedAddress});
+                alert('NFT swapped successfully!');
+            } catch (error) {
+                console.error(error);
+                alert('Error swapping NFT. Check the console for details.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>NFT Swap DApp</h1>
+    <p>Enter the ID of the NFT you want to swap:</p>
+    <input type="text" id="tokenId" placeholder="Enter NFT ID">
+    <button onclick="swapNFT(document.getElementById('tokenId').value)">Swap NFT</button>
+</body>
+</html>
